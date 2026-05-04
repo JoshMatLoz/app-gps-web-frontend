@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { User } from "../auth/types/auth.types";
+import type { User } from "../features/auth/types/auth.types";
 
 interface AuthStore{
   user: User | null;
