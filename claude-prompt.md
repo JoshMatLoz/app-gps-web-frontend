@@ -96,8 +96,11 @@ src/
 │   ├── api/
 │   │   └── axios.instance.ts
 │   ├── components/
+│   │   ├── layout/                  ← NUEVO — componentes de estructura
+│   │   │   ├── Sidebar.tsx          ← COMPLETADO con estilos
+│   │   │   └── DashboardLayout.tsx  ← COMPLETADO
 │   │   ├── ui/
-│   │   │   ├── AnimatedIcon.tsx
+│   │   │   ├── AnimatedIcon.tsx     ← prop disabled agregada
 │   │   │   ├── ConfirmModal.tsx
 │   │   │   ├── CustomButton.tsx     ← tokens actualizados
 │   │   │   ├── CustomInput.tsx      ← tokens actualizados
@@ -106,7 +109,8 @@ src/
 │   │   │   ├── CustomSearchBar.tsx  ← tokens actualizados
 │   │   │   ├── CustomSwitch.tsx     ← tokens actualizados
 │   │   │   ├── CustomTextArea.tsx   ← tokens actualizados
-│   │   │   ├── CustomToolTip.tsx    ← tokens actualizados
+│   │   │   ├── CustomToolTip.tsx    ← tokens actualizados + prop position
+│   │   │   ├── DarkLightButton.tsx  ← NUEVO — toggle dark/light con AnimatePresence
 │   │   │   └── Spinner.tsx          ← tokens actualizados
 │   │   ├── ProtectedRoute.tsx       ← guard privado con useShallow
 │   │   └── PublicOnlyRoute.tsx      ← guard público con useShallow
@@ -254,11 +258,23 @@ useEffect(() => {
 
 **Rutas:** `GET /api/gps-details`, `GET /api/gps-details/:gpsDetailId`, `GET /api/gps-details/:vehicleId/vehicle`, `GET /api/gps-details/:gpsTrackerId/gps-tracker`, `POST /api/gps-details`, `PATCH /api/gps-details/:gpsDetailId`, `PATCH /api/gps-details/:gpsDetailId/remove`, `DELETE /api/gps-details/:gpsDetailId`
 
-## 13. Pendientes — Roadmap Frontend
+## 13. Layout Dashboard (COMPLETADO)
+
+**Componentes:**
+- `Sidebar.tsx` — tres zonas (usuario, nav, acciones), `NavLink` con `isActive`, íconos Lucide, tooltips, `DarkLightButton`, logout con toast. Comportamiento móvil: `fixed` + `translate-x` animado, overlay `bg-black/50`, cierra al navegar (`onClick={onClose}` en NavLinks), prop `end` en `/vehicles` para evitar doble selección
+- `DashboardLayout.tsx` — `useState(isOpen)`, botón hamburguesa `fixed` con `AnimatedIcon` + tooltip, `lg:hidden`, `Outlet` con `p-6`
+- `DarkLightButton.tsx` — `AnimatePresence mode='wait'`, contenedor `relative w-10 h-10`, `motion.div absolute inset-0` para evitar que elementos se apilen durante transición
+
+**Patrones clave:**
+- `onSuccess` en hooks de TanStack Query que llama `setUser`/`clearUser` fue movido al componente — evita que el guard redirija antes de que el toast se muestre
+- Orden correcto en logout: `toast → navigate → clearUser`
+- Orden correcto en login: `toast → navigate → setUser`
+
+## 14. Pendientes — Roadmap Frontend
 
 | Prioridad | Tarea | Estado |
 |---|---|---|
-| 1 | Layout del Dashboard (Sidebar + Navbar) | ⬜ |
+| 1 | Layout del Dashboard (Sidebar + Navbar) | ✅ |
 | 2 | Rebanada GPS frontend (modelos + trackers) | ⬜ |
 | 3 | Rebanada Vehicle frontend (modelos + unidades) | ⬜ |
 | 4 | Rebanada Reports frontend | ⬜ |

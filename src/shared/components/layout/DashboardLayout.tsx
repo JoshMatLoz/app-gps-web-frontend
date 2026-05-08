@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { Outlet } from "react-router";
-import { CustomButton } from "../ui/CustomButton";
 import { Hamburger } from "lucide-react";
+import { AnimatedIcon } from "../ui/AnimatedIcon";
+import { CustomToolTip } from "../ui/CustomToolTip";
 
 const DashboardLayout = () => {
 
@@ -14,16 +15,21 @@ const DashboardLayout = () => {
     <div className="flex">
       <Sidebar isOpen={isOpen} onClose={handleClose}/>
       <div className="flex-1">
-        <div>
-          <CustomButton
-            variant="icon"
-            size="small"
-            onClick={() => setIsOpen(!isOpen)}
+        <div className="lg:hidden p-3">
+          <CustomToolTip
+            text="Menú"
+            position="bottom"
           >
-            <Hamburger size={24}/>
-          </CustomButton>
+            <AnimatedIcon
+              onClick={ () => setIsOpen(!isOpen)}
+
+            >
+              <Hamburger size={24}/>
+            </AnimatedIcon>
+
+          </CustomToolTip>
         </div>
-        <main>
+        <main className="p-6">
           <Outlet/>
         </main>
       </div>
